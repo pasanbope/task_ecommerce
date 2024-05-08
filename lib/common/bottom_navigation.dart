@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../screens/bag.dart';
 import '../screens/category_page.dart';
+import '../screens/favorite.dart';
 import '../screens/home.dart';
+import '../screens/profile.dart';
 
 
 
@@ -16,7 +19,13 @@ class _NavigationState extends State<Navigation> {
   int currentIndex=0;
   List pages = [
     HomeScreen(),
-    ScrollableListPage(),
+    const ScrollableListPage(),
+    const Bag(),
+    const Favorite(),
+    const Profile(),
+
+
+
   ];
 
   @override

@@ -15,6 +15,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   String selectedSize = '';
 
   @override
+  void initState() {
+    super.initState();
+    // final productService = Provider.of<ProductService>(context, listen: false);
+    // productService.fetchCategories();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -37,39 +44,39 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.product.title,
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       '\$${widget.product.price}',
-                      style: TextStyle(fontSize: 20, color: Colors.red),
+                      style: const TextStyle(fontSize: 20, color: Colors.red),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.orange, size: 20),
-                        SizedBox(width: 5),
+                        const Icon(Icons.star, color: Colors.orange, size: 20),
+                        const SizedBox(width: 5),
                         Text(
                           '${widget.product.rating['rate']} / 5',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
                       'Description:',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       widget.product.description,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
@@ -83,10 +90,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildPanel() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24.0),
           topRight: Radius.circular(24.0),
         ),
@@ -95,7 +102,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -113,22 +120,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             'Select Size',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Wrap(
             spacing: 8.0,
             children: _buildSizeList(),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               // Add to cart logic here
             },
-            child: Text('Add to Cart'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red, // Background color
+              onPrimary: Colors.white, // Text color
+            ),
+            child: const Text('Add to Cart', style: TextStyle(color: Colors.white),),
           ),
         ],
       ),
@@ -152,7 +163,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             selectedSize = size;
           });
         },
-        selectedColor: Colors.blue,
+        selectedColor: Colors.red,
         backgroundColor: Colors.grey.withOpacity(0.1),
       ),
     )

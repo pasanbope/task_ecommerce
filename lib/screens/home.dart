@@ -4,15 +4,33 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart'; // Import the Flutt
 import '../services/product_service.dart';
 import '../product_details.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => Provider.of<ProductService>(context, listen: false).fetchProducts());
+    }
 
   @override
   Widget build(BuildContext context) {
-    var products = Provider.of<ProductService>(context).products;
+
+
+    final productService = Provider.of<ProductService>(context);
+    final products = productService.products;
+    final isLoading = productService.isLoading;
 
     return Scaffold(
-      body: CustomScrollView(
+
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator (valueColor: AlwaysStoppedAnimation<Color>(Colors.red),)) // Show loading indicator while fetchingdata
+      : CustomScrollView(
         slivers: [
           SliverAppBar(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -23,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             stretch: true,
             flexibleSpace: Stack(
               children: [
-                Positioned.fill(
+                const Positioned.fill(
                   child: Image(
                     image: AssetImage('assets/images/banner_1.jpg'),
                     fit: BoxFit.cover,
@@ -35,15 +53,15 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Fashion Sale',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       ElevatedButton(
                         onPressed: () {
                           // Add functionality for the button
@@ -67,8 +85,8 @@ class HomeScreen extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     'All Products',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -101,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(15)), // Top rounded corners
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)), // Top rounded corners
                             child: Image.network(
                               product.image,
                               fit: BoxFit.cover,
@@ -120,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                                 allowHalfRating: true,
                                 itemCount: 5,
                                 itemSize: 20,
-                                itemBuilder: (context, _) => Icon(
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.orange,
                                 ),
@@ -130,30 +148,26 @@ class HomeScreen extends StatelessWidget {
                                 },
                               ),
 
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
 
                               Text(
                                 product.category,
-                                style: TextStyle(fontSize: 12, color: Colors.grey),
+                                style: const TextStyle(fontSize: 12, color: Colors.grey),
                               ),
 
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
 
                               Text(
                                 product.title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
                                 '\$${product.price}',
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                               ),
-                              SizedBox(height: 4),
-
-
-
-
+                              const SizedBox(height: 4),
                             ],
                           ),
                         ),
@@ -167,6 +181,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+
     );
   }
 }
