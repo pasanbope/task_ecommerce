@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/bottom_navigation.dart';
-import '../services/product_service.dart';
+import '../common/bottom_navigation.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,6 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -18,17 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateToHome() async {
-    await Provider.of<ProductService>(context, listen: false).fetchProducts();
-    await Provider.of<ProductService>(context, listen: false).fetchCategories();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Navigation()));
-  }
+    // Simulate some loading or setup process
+    await Future.delayed(Duration(seconds: 3));  // Set the delay as needed
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Navigation()));}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
     body: Container(
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.red,
       ),
       child: Column(
